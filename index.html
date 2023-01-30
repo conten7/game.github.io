@@ -1,0 +1,122 @@
+<style>
+#shop {
+position: absolute;
+top: 0;
+left: 0;
+width: 100px;
+height: 80px;
+background-image: url(img/5.png);
+background-size: 100px 80px;
+}
+#raspberry {
+position: absolute;
+top: 0;
+left: 0;
+width: 50px;
+height: 50px;
+background-image: url(img/2.png);
+background-size: 50px 50px;
+}
+#wolf {
+position: absolute;
+top: 0;
+left: 0;
+width: 50px;
+height: 50px;
+background-image: url(img/1.png);
+background-size: 50px 50px;
+}
+#bush {
+position: absolute;
+top: -10000;
+left: -10000;
+width: 100px;
+height: 100px;
+background-image: url(img/4.png);
+background-size: 100px 100px;
+}
+</style>
+<div id ="shop"></div>
+<div id ="bush"></div>
+<div id ="wolf"></div>
+<div id ="raspberry"></div>
+<p id="demo"></p>
+<font color=red size=200px><center><p id="p1">0</p></center></font>
+<font color=red><p id="p2">lvl_0</p></font>
+<font color=red><p id="p3">next_lvl_5</p></font>
+<script>
+var score = 0;
+document.getElementById("demo");
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+var cena = 5
+var s1 = 0
+var x = 0
+var y = 0
+var speed = 50
+var raspberry = document.querySelector('#raspberry');
+var wolf = document.querySelector('#wolf');
+var bush = document.querySelector('#bush');
+var r = 1
+if (r == 1){
+var xr = getRandomInt(screen.availWidth - 49);
+var yr = getRandomInt(screen.availHeight - 149);
+raspberry.style.left = xr + 'px';
+raspberry.style.top = yr + 'px';
+r = r + 2
+}
+window.addEventListener('keydown', function(event){
+if ("d" == event.key){
+if (x + speed < screen.availWidth - 50){
+x = x + speed
+wolf.style.left = x + 'px';
+}
+}
+if ("w" == event.key){
+if (y - speed > -1){
+y = y - speed
+wolf.style.top = y + 'px';
+}
+}
+if ("a" == event.key){
+if (x - speed > -1){
+x = x - speed
+wolf.style.left = x + 'px';
+}
+}
+if ("s" == event.key){
+if (y + speed < screen.availHeight - 150){
+y = y + speed
+wolf.style.top = y + 'px';
+}
+}
+if (xr - x < 50 && yr - y < 50 && xr - x > -50 && yr - y > -50){
+xr = getRandomInt(screen.availWidth - 99);
+yr = getRandomInt(screen.availHeight - 149);
+raspberry.style.left = xr + 'px';
+raspberry.style.top = yr + 'px';
+score = score + 1
+document.getElementById("p1").innerHTML = score;
+}
+});
+window.addEventListener('click', function(event){
+if (event.clientX < 100 && event.clientY < 100 && score > cena - 1){
+score = score - cena
+
+document.getElementById("p1").innerHTML = score;
+bush.style.top = 600 + 'px';
+bush.style.left = 10 + 'px';
+s1 = s1 + 1
+cena = cena * 2
+document.getElementById("p3").innerHTML = 'next_lvl_' + cena;
+document.getElementById("p2").innerHTML = 'lvl_' + s1;
+}
+});
+function farm() {
+ score = score + s1
+document.getElementById("p1").innerHTML = score;
+}
+setInterval(farm, 30000);
+
+</script>
